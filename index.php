@@ -31,7 +31,7 @@
           </button>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="dashboard.php" class="text-sm font-semibold leading-6 text-gray-900">Dashboard<span
+          <a href="login.php" class="text-sm font-semibold leading-6 text-gray-900">Login<span
               aria-hidden="true">&rarr;</span></a>
         </div>
       </nav>
