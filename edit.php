@@ -1,9 +1,21 @@
 <?php
+
+session_start();
+
+
+// Retrieve the user ID and user_type from the session
+$user_id = $_SESSION["user_id"];
+$user = $_SESSION["user_type"];
+
 include('connection.php');
 
 // Fetch the rows from the 'product' table
 $sql = "SELECT * FROM annonce";
 $result = mysqli_query($conn, $sql);
+
+// Retrieve the user ID from the session
+$user_id = $_SESSION["user_id"];
+$user = $_SESSION["user_type"];
 
 // Handle form submission for updating products
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {

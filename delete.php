@@ -1,6 +1,12 @@
 <?php
+
+session_start();
+
 include 'connection.php';
 
+// Retrieve the user ID and user_type from the session
+$user_id = $_SESSION["user_id"];
+$user = $_SESSION["user_type"];
 
 // Process product deletion
 if (isset($_POST['delete'])) {

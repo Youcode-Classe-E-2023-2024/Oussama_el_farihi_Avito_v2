@@ -1,6 +1,5 @@
 <?php
 session_start();
-include('connection.php');
 
 include('connection.php'); // Include your connection file
 

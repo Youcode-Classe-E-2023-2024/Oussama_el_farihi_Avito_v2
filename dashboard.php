@@ -1,6 +1,13 @@
 <?php
 
+session_start();
+
 include 'connection.php';
+
+
+// Retrieve the user ID and user_type from the session
+$user_id = $_SESSION["user_id"];
+$user = $_SESSION["user_type"];
 
 if (isset($_POST['submit'])) {
   $product_title = $_POST['product_title'];
