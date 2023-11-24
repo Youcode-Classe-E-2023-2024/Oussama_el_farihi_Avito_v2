@@ -5,6 +5,7 @@ USE avito_database;
 -- Create the User table
 CREATE TABLE user (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    img varchar(255),
     name VARCHAR(255),
     email VARCHAR(255),
     password VARCHAR(255),
