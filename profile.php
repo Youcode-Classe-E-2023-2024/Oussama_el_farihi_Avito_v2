@@ -1,3 +1,5 @@
+<?php include('connection.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,36 +42,53 @@
 
     <header class="bg-white shadow">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold tracking-tight text-gray-900">Add product</h1>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">User profile</h1>
         </div>
     </header>
     <main>
-        <!-- Add this section after the main content of the dashboard.php file -->
-        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <?php 
+        // Fetch the rows from the 'user' table
+        $sql = "SELECT * FROM user";
+        $result = mysqli_query($conn, $sql);
+
+        // Loop through the result and display each user
+        while ($row = mysqli_fetch_assoc($result)) {
+          $user_id = $row['id'];
+          $username = $row['name'];
+          $email = $row['email'];
+          $role = $row['user_type'];
+          $user_picture = $row['img'];
+
+
+          echo "
+          <!-- Add this section after the main content of the dashboard.php file -->
+        <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
+            <div class='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
                 <!-- Profile Card -->
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                    <div class="p-4">
+                <div class='bg-white overflow-hidden shadow rounded-lg'>
+                    <div class='p-4'>
                         <!-- User Image -->
-                        <div class="flex items-center justify-center">
-                            <img src="path/to/user-image.jpg" alt="User Image" class="w-16 h-16 rounded-full">
+                        <div class='flex items-center justify-center'>
+                            <img src='img/$user_picture' alt='User Image' class='w-16 h-16 rounded-full'>
                         </div>
                         <!-- User Name -->
-                        <div class="mt-4 text-center">
-                            <h3 class="text-lg font-medium leading-6 text-gray-900">User Name</h3>
+                        <div class='mt-4 text-center'>
+                            <h3 class='text-lg font-medium leading-6 text-gray-900'>$username</h3>
                         </div>
                         <!-- User Email -->
-                        <div class="mt-2 text-center">
-                            <p class="text-sm leading-5 text-gray-600">user@example.com</p>
+                        <div class='mt-2 text-center'>
+                            <p class='text-sm leading-5 text-gray-600'>$email</p>
                         </div>
                         <!-- User Role -->
-                        <div class="mt-2 text-center">
-                            <p class="text-sm leading-5 font-medium text-indigo-600">Admin</p>
+                        <div class='mt-2 text-center'>
+                            <p class='text-sm leading-5 font-medium text-indigo-600'>$role</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>";
+        }
+        ?>
     </main>
     </div>
 </body>
