@@ -1,4 +1,19 @@
-<?php include('connection.php'); ?>
+<?php 
+session_start();
+include('connection.php');
+
+include('connection.php'); // Include your connection file
+
+// Check if the user is logged in
+if (!isset($_SESSION["user_id"])) {
+    // Redirect to the login page or handle the case where the user is not logged in
+    header("Location: login.php");
+    exit();
+}
+
+// Retrieve the user ID from the session
+$user_id = $_SESSION["user_id"];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,9 +61,10 @@
         </div>
     </header>
     <main>
-        <?php 
-        // Fetch the rows from the 'user' table
-        $sql = "SELECT * FROM user";
+        <?php
+
+        // Fetch the information of the logged-in user from the 'user' table
+        $sql = "SELECT * FROM user WHERE id = $user_id";
         $result = mysqli_query($conn, $sql);
 
         // Loop through the result and display each user
