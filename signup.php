@@ -6,14 +6,14 @@ if (isset($_POST['submit'])) {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $user_type = $_POST["user_type"];
-    $product_picture_name = $_FILES['img']['name'];
-    $product_picture_tmp = $_FILES['img']['tmp_name'];
+    $user_picture_name = $_FILES['img']['name'];
+    $user_picture_tmp = $_FILES['img']['tmp_name'];
     $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Hash the password
 
-    move_uploaded_file($product_picture_tmp, "./img/$product_picture_name");
+    move_uploaded_file($user_picture_tmp, "./img/$user_picture_name");
 
     $stmt = $conn->prepare("INSERT INTO `user` (name, email, user_type, password, img) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $name, $email, $user_type, $password, $product_picture_name);
+    $stmt->bind_param('sssss', $name, $email, $user_type, $password, $user_picture_name);
 
     if ($stmt->execute()) {
         echo "<script>alert('Sign up done successfully');</script>";
