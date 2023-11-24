@@ -1,5 +1,7 @@
 <?php
+
 session_start();
+
 include('connection.php');
 
 if (isset($_POST['submit'])) {
@@ -20,7 +22,7 @@ if (isset($_POST['submit'])) {
       // Login successful
       $_SESSION["name"] = $user['name'];
       $_SESSION["user_id"] = $user['id'];
-      $_SESSION["user_type"] = $user_type['user_type'];
+      $_SESSION["user_type"] = $user['user_type'];
 
       // Redirect based on user type
       switch ($user['user_type']) {
