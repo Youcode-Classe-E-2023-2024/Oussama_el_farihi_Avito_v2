@@ -6,10 +6,14 @@ if (isset($_POST['submit'])) {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $user_type = $_POST["user_type"];
+    $product_picture_name = $_FILES['img']['name'];
+    $product_picture_tmp = $_FILES['img']['tmp_name'];
     $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Hash the password
 
-    $stmt = $conn->prepare("INSERT INTO `user` (name, email, user_type, password) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param('ssss', $name, $email, $user_type, $password);
+    move_uploaded_file($product_picture_tmp, "./img/$product_picture_name");
+
+    $stmt = $conn->prepare("INSERT INTO `user` (name, email, user_type, password, img) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param('sssss', $name, $email, $user_type, $password, $product_picture_name);
 
     if ($stmt->execute()) {
         echo "<script>alert('Sign up done successfully');</script>";
@@ -42,8 +46,16 @@ if (isset($_POST['submit'])) {
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>"
+            <form class="space-y-6" method="POST" action="signup.php"
                 enctype="multipart/form-data">
+
+                <div>
+                    <label for="img" class="block text-sm font-medium leading-6 text-gray-900">User image</label>
+                    <div class="mt-2">
+                        <input id="img" for="img" name="img" type="file" autocomplete="img" required
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
 
                 <div>
                     <label class="block text-sm font-medium leading-6 text-gray-900">Username</label>
