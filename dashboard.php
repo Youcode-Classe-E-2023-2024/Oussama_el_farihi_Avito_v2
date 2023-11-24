@@ -14,13 +14,13 @@ if (isset($_POST['submit'])) {
 
   $stmt = $conn->prepare("INSERT INTO `annonce` (image, titre, description, prix) VALUES (?, ?, ?, ?)");
   $stmt->bind_param('ssss', $product_picture_name, $product_title, $product_description, $product_price);
-  
+
   if ($stmt->execute()) {
     echo "<script>alert('Data inserted successfully');</script>";
   } else {
     echo "<script>alert('Failed to execute statement: " . $stmt->error . "');</script>";
   }
-  header("Location: ". $_SERVER['PHP_SELF']);
+  header("Location: " . $_SERVER['PHP_SELF']);
   exit();
 }
 
@@ -48,9 +48,14 @@ if (isset($_POST['submit'])) {
             </a>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-                <a href="dashboard.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Add</a>
-                <a href="delete.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Delete</a>
-                <a href="edit.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Edit</a>
+                <a href="profile.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                  aria-current="page">Profile</a>
+                <a href="dashboard.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                  aria-current="page">Add</a>
+                <a href="delete.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                  aria-current="page">Delete</a>
+                <a href="edit.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                  aria-current="page">Edit</a>
               </div>
             </div>
           </div>
@@ -85,7 +90,8 @@ if (isset($_POST['submit'])) {
                         clip-rule="evenodd" />
                     </svg>
                     <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                      <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                      <label for="file-upload"
+                        class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                         <input type="file" id="product_picture" name="product_picture" class="sr-only">
                       </label>
                     </div>
@@ -99,28 +105,30 @@ if (isset($_POST['submit'])) {
 
           <div class="border-b border-gray-900/10 pb-12">
 
-          <div class="col-span-full">
-    <label for="product_title" class="block text-sm font-medium leading-6 text-gray-900">Product Title</label>
-    <div class="mt-2">
-      <input type="text" name="product_title" id="product_title" autocomplete="street-address"
-        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-    </div>
-  </div>
+            <div class="col-span-full">
+              <label for="product_title" class="block text-sm font-medium leading-6 text-gray-900">Product Title</label>
+              <div class="mt-2">
+                <input type="text" name="product_title" id="product_title" autocomplete="street-address"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+            </div>
 
-  <div class="col-span-full">
-    <label for="product_description" class="block text-sm font-medium leading-6 text-gray-900">Product Description</label>
-    <div class="mt-2">
-      <input type="text" name="product_description" id="product_description" autocomplete="street-address"
-        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-    </div>
-  </div>
+            <div class="col-span-full">
+              <label for="product_description" class="block text-sm font-medium leading-6 text-gray-900">Product
+                Description</label>
+              <div class="mt-2">
+                <input type="text" name="product_description" id="product_description" autocomplete="street-address"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+            </div>
 
-  <div class="sm:col-span-2 sm:col-start-1">
-    <label for="product_price" class="block text-sm font-medium leading-6 text-gray-900">Product Price</label>
-    <div class="mt-2">
-      <input type="number" name="product_price" id="product_price" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-    </div>
-  </div>
+            <div class="sm:col-span-2 sm:col-start-1">
+              <label for="product_price" class="block text-sm font-medium leading-6 text-gray-900">Product Price</label>
+              <div class="mt-2">
+                <input type="number" name="product_price" id="product_price" autocomplete="address-level2"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+            </div>
           </div>
         </div>
 
@@ -130,11 +138,13 @@ if (isset($_POST['submit'])) {
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
           <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-          <button type="submit" name="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+          <button type="submit" name="submit"
+            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
         </div>
       </form>
     </div>
   </main>
   </div>
 </body>
+
 </html>
