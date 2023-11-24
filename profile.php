@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include('connection.php');
 
@@ -26,34 +26,8 @@ $user_id = $_SESSION["user_id"];
 </head>
 
 <body>
-    <div class="min-h-full">
-        <nav class="bg-gray-800">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 items-center justify-between">
-                    <div class="flex items-center">
-                        <a href="index.php" class="flex-shrink-0">
-                            <img class="h-8 w-8" src="img/avito_logo.png" alt="Avito">
-                        </a>
-                        <div class="hidden md:block">
-                            <div class="ml-10 flex items-baseline space-x-4">
-                                <a href="profile.php"
-                                    class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    aria-current="page">Profile</a>
-                                <a href="dashboard.php"
-                                    class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    aria-current="page">Add</a>
-                                <a href="delete.php"
-                                    class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    aria-current="page">Delete</a>
-                                <a href="edit.php"
-                                    class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    aria-current="page">Edit</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
+
+    <?php include 'navDash.php'; ?>
 
     <header class="bg-white shadow">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -69,14 +43,14 @@ $user_id = $_SESSION["user_id"];
 
         // Loop through the result and display each user
         while ($row = mysqli_fetch_assoc($result)) {
-          $user_id = $row['id'];
-          $username = $row['name'];
-          $email = $row['email'];
-          $role = $row['user_type'];
-          $user_picture = $row['img'];
+            $user_id = $row['id'];
+            $username = $row['name'];
+            $email = $row['email'];
+            $role = $row['user_type'];
+            $user_picture = $row['img'];
 
 
-          echo "
+            echo "
           <!-- Add this section after the main content of the dashboard.php file -->
         <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
             <div class='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
