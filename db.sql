@@ -2,22 +2,23 @@
 CREATE DATABASE IF NOT EXISTS avito_database;
 USE avito_database;
 
--- Create the Utilisateur table
-CREATE TABLE utilisateur (
-    id INT PRIMARY KEY,
-    nom VARCHAR(255),
+-- Create the User table
+CREATE TABLE user (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
     email VARCHAR(255),
-    mot_de_passe VARCHAR(255)
+    password VARCHAR(255),
+    user_type ENUM('admin', 'annonceur', 'utilisateur') NOT NULL
 );
 
 -- Create the Annonce table
 CREATE TABLE annonce (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     image varchar(255),
     titre VARCHAR(255),
     description TEXT,
     prix FLOAT,
     date_poste DATE,
-    utilisateur_id INT,
-    FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
