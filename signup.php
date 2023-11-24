@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
         $error_message = "Failed to execute statement: " . $stmt->error;
         error_log($error_message);
         echo "<script>alert('Error: $error_message');</script>";
-    }    
+    }
 }
 
 ?>
@@ -86,7 +86,9 @@ if (isset($_POST['submit'])) {
                 </div>
 
                 <div>
-                    <button type="submit" for="submit" name="submit" class="mt-6 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                    <button type="submit" for="submit" name="submit"
+                        class="mt-6 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
+                        in</button>
                 </div>
             </form>
         </div>

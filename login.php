@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
       // Redirect based on user type
       switch ($user['user_type']) {
         case 'admin':
-          header("Location: admin_dashboard.php");
+          header("Location: profile.php");
           break;
         case 'utilisateur':
           header("Location: utilisateur_dashboard.php");
