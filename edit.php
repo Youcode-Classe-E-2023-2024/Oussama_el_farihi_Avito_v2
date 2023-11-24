@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     } else {
         echo "<script>alert('Failed to update product: " . $stmt->error . "');</script>";
     }
-    header("Location: ". $_SERVER['PHP_SELF']);
-  exit();
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 ?>
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
 </head>
 
 <body>
-<div class="min-h-full">
+    <div class="min-h-full">
         <nav class="bg-gray-800">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 items-center justify-between">
@@ -49,6 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
                         </a>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
+                                <a href="profile.php"
+                                    class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                    aria-current="page">Profile</a>
                                 <a href="dashboard.php"
                                     class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                                     aria-current="page">Add</a>
@@ -64,27 +67,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
                 </div>
             </div>
     </div>
-        <header class="bg-white shadow">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Edit Products</h1>
-            </div>
-        </header>
-        <main>
-            <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+    <header class="bg-white shadow">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">Edit Products</h1>
+        </div>
+    </header>
+    <main>
+        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
-            <p class="mt-1 text-sm leading-6 text-gray-600 mb-6">This information will be displayed publicly so be careful
-              what you edit.</p>
-                <!-- Display products for editing -->
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    <?php
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $product_id = $row['id'];
-                        $product_title = $row['titre'];
-                        $product_description = $row['description'];
-                        $product_price = $row['prix'];
-                        $product_picture = $row['image'];
+            <p class="mt-1 text-sm leading-6 text-gray-600 mb-6">This information will be displayed publicly so be
+                careful
+                what you edit.</p>
+            <!-- Display products for editing -->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <?php
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $product_id = $row['id'];
+                    $product_title = $row['titre'];
+                    $product_description = $row['description'];
+                    $product_price = $row['prix'];
+                    $product_picture = $row['image'];
 
-                        echo "
+                    echo "
                         <div class='p-6 bg-white border rounded-lg shadow-md'>
                             <img src='img/$product_picture' class='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80'>
                             <form method='POST'>
@@ -101,11 +105,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
                                 <button type='submit' name='update' class='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300'>Update</button>
                             </form>
                         </div>";
-                    }
-                    ?>
-                </div>
+                }
+                ?>
             </div>
-        </main>
+        </div>
+    </main>
     </div>
 </body>
 

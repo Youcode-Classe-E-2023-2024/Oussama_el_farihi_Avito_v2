@@ -20,8 +20,8 @@ if (isset($_POST['delete'])) {
     } else {
         echo "<script>alert('No products selected for deletion');</script>";
     }
-    header("Location: ". $_SERVER['PHP_SELF']);
-  exit();
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 // Fetch all products for display
@@ -51,6 +51,9 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                         </a>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
+                                <a href="profile.php"
+                                    class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                    aria-current="page">Profile</a>
                                 <a href="dashboard.php"
                                     class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                                     aria-current="page">Add</a>
@@ -73,9 +76,9 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
             </div>
         </header>
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
+            <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
             <p class="mt-1 text-sm leading-6 text-gray-600">This information will be displayed publicly so be careful
-              what you delete.</p>
+                what you delete.</p>
             <form method="POST" action="delete.php">
                 <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <?php foreach ($products as $product): ?>
