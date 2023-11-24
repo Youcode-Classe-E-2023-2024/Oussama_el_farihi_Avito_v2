@@ -19,6 +19,7 @@ if (isset($_POST['submit'])) {
     if (password_verify($password, $user['password'])) {
       // Login successful
       $_SESSION["name"] = $user['name'];
+      $_SESSION["user_id"] = $user['id'];
 
       // Redirect based on user type
       switch ($user['user_type']) {
