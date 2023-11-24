@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $user_type = $_POST["user_type"];
-    $password = $_POST["password"];
+    $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Hash the password
 
     $stmt = $conn->prepare("INSERT INTO `user` (name, email, user_type, password) VALUES (?, ?, ?, ?)");
     $stmt->bind_param('ssss', $name, $email, $user_type, $password);
@@ -14,11 +14,12 @@ if (isset($_POST['submit'])) {
     if ($stmt->execute()) {
         echo "<script>alert('Sign up done successfully');</script>";
     } else {
-        echo "<script>alert('Failed to execute statement: " . $stmt->error . "');</script>";
-    }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
+        $error_message = "Failed to execute statement: " . $stmt->error;
+        error_log($error_message);
+        echo "<script>alert('Error: $error_message');</script>";
+    }    
 }
+
 ?>
 
 
@@ -41,7 +42,8 @@ if (isset($_POST['submit'])) {
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" method="POST" enctype="multipart/form-data">
+            <form class="space-y-6" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>"
+                enctype="multipart/form-data">
 
                 <div>
                     <label class="block text-sm font-medium leading-6 text-gray-900">Username</label>
@@ -62,33 +64,30 @@ if (isset($_POST['submit'])) {
                 <div>
                     <label class="block text-sm font-medium leading-6 text-gray-900">User Type</label>
                     <div class="mt-2">
-                        <select for="user_type" id="dropdown"
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            onchange="toggleInputVisibility()">
-                            <option value="">Utilisatuer</option>
-                            <option value="">Annonceur</option>
+                        <select id="user_type" for="user_type" name="user_type"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <option value="utilisateur">Utilisateur</option>
+                            <option value="annonceur">Annonceur</option>
                         </select>
                     </div>
+                </div>
 
-                    <div>
-                        <div class="mt-4 flex items-center justify-between">
-                            <label for="password"
-                                class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                            <div class="text-sm">
-                            </div>
-                        </div>
-                        <div class="mt-2">
-                            <input id="password" for="password" name="password" type="password" autocomplete="current-password"
-                                required
-                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <div>
+                    <div class="mt-4 flex items-center justify-between">
+                        <label class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                        <div class="text-sm">
                         </div>
                     </div>
-
-                    <div>
-                        <button type="submit"
-                            class="mt-6 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
-                            in</button>
+                    <div class="mt-2">
+                        <input id="password" for="password" name="password" type="password"
+                            autocomplete="current-password" required
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
+                </div>
+
+                <div>
+                    <button type="submit" for="submit" name="submit" class="mt-6 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                </div>
             </form>
         </div>
     </div>
