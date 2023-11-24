@@ -20,6 +20,7 @@ if (isset($_POST['submit'])) {
       // Login successful
       $_SESSION["name"] = $user['name'];
       $_SESSION["user_id"] = $user['id'];
+      $_SESSION["user_type"] = $user_type['user_type'];
 
       // Redirect based on user type
       switch ($user['user_type']) {
@@ -27,10 +28,10 @@ if (isset($_POST['submit'])) {
           header("Location: profile.php");
           break;
         case 'utilisateur':
-          header("Location: utilisateur_dashboard.php");
+          header("Location: profile.php");
           break;
         case 'annonceur':
-          header("Location: annonceur_dashboard.php");
+          header("Location: profile.php");
           break;
         default:
           // Handle other user types if needed
