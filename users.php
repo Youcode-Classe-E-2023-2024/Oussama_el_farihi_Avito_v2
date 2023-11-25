@@ -13,10 +13,6 @@ include('connection.php');
 $sql = "SELECT * FROM annonce";
 $result = mysqli_query($conn, $sql);
 
-// Retrieve the user ID from the session
-$user_id = $_SESSION["user_id"];
-$user = $_SESSION["user_type"];
-
 ?>
 
 <!DOCTYPE html>
