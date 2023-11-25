@@ -42,6 +42,9 @@ while ($row = mysqli_fetch_assoc($result)) {
         <p class='mt-1 truncate text-xs leading-5 text-gray-500'>$email</p>
       </div>
     </div>
+    <div class='hidden shrink-0 sm:flex sm:flex-col sm:items-end'>
+      <p class='text-sm leading-6 text-gray-900'>$role</p>
+      </div>
   </li>";
 }
 ?>
