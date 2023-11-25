@@ -1,20 +1,30 @@
 <?php
-
 session_start();
 
 include 'connection.php';
 
 // Retrieve the user ID and user_type from the session
 $user_id = $_SESSION["user_id"];
-$user = $_SESSION["user_type"];
+$user_type = $_SESSION["user_type"];
+
 
 // Process product deletion
 if (isset($_POST['delete'])) {
     if (isset($_POST['selected_products'])) {
         foreach ($_POST['selected_products'] as $product_id) {
-            $delete_query = "DELETE FROM annonce WHERE id = ?";
-            $stmt = $conn->prepare($delete_query);
-            $stmt->bind_param('i', $product_id);
+            
+            // Check user type before deleting
+            if ($user_type == 'annonceur') {
+                // Annonceur can only delete their own products
+                $delete_query = "DELETE FROM annonce WHERE id = ? AND user_id = ?";
+                $stmt = $conn->prepare($delete_query);
+                $stmt->bind_param('ii', $product_id, $user_id);
+            } else {
+                // Admin can delete any product
+                $delete_query = "DELETE FROM annonce WHERE id = ?";
+                $stmt = $conn->prepare($delete_query);
+                $stmt->bind_param('i', $product_id);
+            }
 
             if ($stmt->execute()) {
                 echo "<script>alert('Selected products deleted successfully'); window.location.href='delete.php';</script>";
@@ -30,8 +40,14 @@ if (isset($_POST['delete'])) {
     exit();
 }
 
-// Fetch all products for display
-$select_all_query = "SELECT id, titre, image FROM annonce";
+// Fetch only products associated with the logged-in user if the user is an "annonceur"
+if ($user_type == 'annonceur') {
+    $select_all_query = "SELECT id, titre, image FROM annonce WHERE user_id = $user_id";
+} else {
+    // Fetch all products for an "admin"
+    $select_all_query = "SELECT id, titre, image FROM annonce";
+}
+
 $result = $conn->query($select_all_query);
 $products = $result->fetch_all(MYSQLI_ASSOC);
 ?>
