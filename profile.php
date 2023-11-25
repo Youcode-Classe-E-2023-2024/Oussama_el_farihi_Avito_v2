@@ -37,12 +37,12 @@ $user_id = $_SESSION["user_id"];
         <?php
 
         // Fetch the information of the logged-in user from the 'user' table
-        $sql = "SELECT * FROM user WHERE id = $user_id";
+        $sql = "SELECT * FROM user WHERE user_id = $user_id";
         $result = mysqli_query($conn, $sql);
 
         // Loop through the result and display each user
         while ($row = mysqli_fetch_assoc($result)) {
-            $user_id = $row['id'];
+            $user_id = $row['user_id'];
             $username = $row['name'];
             $email = $row['email'];
             $role = $row['user_type'];
