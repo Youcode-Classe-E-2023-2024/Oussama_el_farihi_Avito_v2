@@ -35,9 +35,6 @@ if (isset($_POST['submit'])) {
         case 'annonceur':
           header("Location: profile.php");
           break;
-        default:
-          // Handle other user types if needed
-          header("Location: default_add.php");
       }
 
       exit(); // Ensure no further code is executed
