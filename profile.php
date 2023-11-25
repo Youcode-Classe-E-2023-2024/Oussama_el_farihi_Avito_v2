@@ -50,9 +50,8 @@ $user_id = $_SESSION["user_id"];
 
 
             echo "
-          <!-- Add this section after the main content of the add.php file -->
-        <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-            <div class='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+            <div class='mx-auto max-w-xl py-16 sm:px-12 lg:px-16'>
+            <div class='bg-white overflow-hidden shadow rounded-lg p-6'>
                 <!-- Profile Card -->
                 <div class='bg-white overflow-hidden shadow rounded-lg'>
                     <div class='p-4'>
