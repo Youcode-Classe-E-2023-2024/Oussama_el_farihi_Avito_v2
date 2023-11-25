@@ -7,18 +7,28 @@ include 'connection.php';
 $user_id = $_SESSION["user_id"];
 $user_type = $_SESSION["user_type"];
 
+// Fetch only products associated with the logged-in user if the user is an "annonceur"
+if ($user_type == 'annonceur') {
+    $select_all_query = "SELECT id, titre, image FROM annonce WHERE user_id = $user_id";
+} else {
+    // Fetch all products for an "admin"
+    $select_all_query = "SELECT id, titre, image FROM annonce";
+}
+
+$result = $conn->query($select_all_query);
+$products = $result->fetch_all(MYSQLI_ASSOC);
 
 // Process product deletion
 if (isset($_POST['delete'])) {
     if (isset($_POST['selected_products'])) {
         foreach ($_POST['selected_products'] as $product_id) {
-            
+
             // Check user type before deleting
             if ($user_type == 'annonceur') {
                 // Annonceur can only delete their own products
-                $delete_query = "DELETE FROM annonce WHERE id = ? AND user_id = ?";
+                $delete_query = "DELETE FROM annonce WHERE id = ? AND user_id = $user_id";
                 $stmt = $conn->prepare($delete_query);
-                $stmt->bind_param('ii', $product_id, $user_id);
+                $stmt->bind_param('i', $product_id);
             } else {
                 // Admin can delete any product
                 $delete_query = "DELETE FROM annonce WHERE id = ?";
@@ -39,17 +49,6 @@ if (isset($_POST['delete'])) {
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
-
-// Fetch only products associated with the logged-in user if the user is an "annonceur"
-if ($user_type == 'annonceur') {
-    $select_all_query = "SELECT id, titre, image FROM annonce WHERE user_id = $user_id";
-} else {
-    // Fetch all products for an "admin"
-    $select_all_query = "SELECT id, titre, image FROM annonce";
-}
-
-$result = $conn->query($select_all_query);
-$products = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
