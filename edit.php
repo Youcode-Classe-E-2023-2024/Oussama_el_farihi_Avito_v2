@@ -1,21 +1,22 @@
 <?php
-
 session_start();
 
+include 'connection.php';
 
 // Retrieve the user ID and user_type from the session
 $user_id = $_SESSION["user_id"];
-$user = $_SESSION["user_type"];
+$user_type = $_SESSION["user_type"];
 
-include('connection.php');
+// Fetch only products associated with the logged-in user if the user is an "annonceur"
+if ($user_type == 'annonceur') {
+    $select_all_query = "SELECT id, titre, image, description, prix FROM annonce WHERE user_id = $user_id";
+} else {
+    // Fetch all products for an "admin"
+    $select_all_query = "SELECT id, titre, image, description, prix FROM annonce";
+}
 
-// Fetch the rows from the 'product' table
-$sql = "SELECT * FROM annonce";
-$result = mysqli_query($conn, $sql);
-
-// Retrieve the user ID from the session
-$user_id = $_SESSION["user_id"];
-$user = $_SESSION["user_type"];
+$result = $conn->query($select_all_query);
+$products = $result->fetch_all(MYSQLI_ASSOC);
 
 // Handle form submission for updating products
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
@@ -24,10 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     $product_description = $_POST['product_description'];
     $product_price = $_POST['product_price'];
 
-    // Update the product details
-    $update_sql = "UPDATE annonce SET titre=?, description=?, prix=? WHERE id=?";
-    $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param('sssi', $product_title, $product_description, $product_price, $product_id);
+    // Check user type before editing
+    if ($user_type == 'annonceur') {
+        // Annonceur can only update their own products
+        $update_sql = "UPDATE annonce SET titre=?, description=?, prix=? WHERE id=? AND user_id=?";
+        $stmt = $conn->prepare($update_sql);
+        $stmt->bind_param('sssii', $product_title, $product_description, $product_price, $product_id, $user_id);
+    } else {
+        // Admin can update any products details
+        $update_sql = "UPDATE annonce SET titre=?, description=?, prix=? WHERE id=?";
+        $stmt = $conn->prepare($update_sql);
+        $stmt->bind_param('sssi', $product_title, $product_description, $product_price, $product_id);
+    }
 
     if ($stmt->execute()) {
         echo "<script>alert('Product updated successfully');</script>";
@@ -68,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
             <!-- Display products for editing -->
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <?php
-                while ($row = mysqli_fetch_assoc($result)) {
+                foreach ($products as $row) {
                     $product_id = $row['id'];
                     $product_title = $row['titre'];
                     $product_description = $row['description'];
