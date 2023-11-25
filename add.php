@@ -19,8 +19,8 @@ if (isset($_POST['submit'])) {
   move_uploaded_file($product_picture_tmp, "./img/$product_picture_name");
 
 
-  $stmt = $conn->prepare("INSERT INTO `annonce` (image, titre, description, prix) VALUES (?, ?, ?, ?)");
-  $stmt->bind_param('ssss', $product_picture_name, $product_title, $product_description, $product_price);
+  $stmt = $conn->prepare("INSERT INTO `annonce` (image, titre, description, prix, user_id) VALUES (?, ?, ?, ?, ?)");
+  $stmt->bind_param('ssssi', $product_picture_name, $product_title, $product_description, $product_price, $user_id);
 
   if ($stmt->execute()) {
     echo "<script>alert('Data inserted successfully');</script>";
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-  
+
   <?php include 'navDash.php'; ?>
 
   <header class="bg-white shadow">
