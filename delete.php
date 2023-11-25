@@ -79,7 +79,7 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                     <button type="submit" name="delete"
                         class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Delete
                         Selected</button>
-                    <a href="dashboard.php" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+                    <a href="add.php" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
                 </div>
             </form>
         </div>

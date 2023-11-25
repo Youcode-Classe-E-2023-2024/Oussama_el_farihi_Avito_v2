@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
           break;
         default:
           // Handle other user types if needed
-          header("Location: default_dashboard.php");
+          header("Location: default_add.php");
       }
 
       exit(); // Ensure no further code is executed

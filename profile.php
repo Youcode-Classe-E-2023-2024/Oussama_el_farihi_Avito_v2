@@ -50,7 +50,7 @@ $user_id = $_SESSION["user_id"];
 
 
             echo "
-          <!-- Add this section after the main content of the dashboard.php file -->
+          <!-- Add this section after the main content of the add.php file -->
         <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
             <div class='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
                 <!-- Profile Card -->

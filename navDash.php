@@ -26,7 +26,7 @@ $user = $_SESSION["user_type"];
               <div class='ml-10 flex items-baseline space-x-4'>
                 <a href='profile.php' class='bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
                   aria-current='page'>Profile</a>
-                <a href='dashboard.php' class='bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
+                <a href='add.php' class='bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
                   aria-current='page'>Add</a>
                 <a href='delete.php' class='bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
                   aria-current='page'>Delete</a>
@@ -53,7 +53,7 @@ $user = $_SESSION["user_type"];
               <div class="ml-10 flex items-baseline space-x-4">
                 <a href="profile.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                   aria-current="page">Profile</a>
-                <a href="dashboard.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                <a href="add.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                   aria-current="page">Add</a>
                 <a href="delete.php" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                   aria-current="page">Delete</a>
