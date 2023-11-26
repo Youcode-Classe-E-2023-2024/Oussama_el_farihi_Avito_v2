@@ -83,9 +83,6 @@ if (isset($_POST['submit'])) {
         <div>
           <div class="flex items-center justify-between">
             <label class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-            <div class="text-sm">
-              <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-            </div>
           </div>
           <div class="mt-2">
             <input id="password" for="password" name="password" type="password" autocomplete="current-password" required
