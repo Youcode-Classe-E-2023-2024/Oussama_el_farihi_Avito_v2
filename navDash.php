@@ -14,7 +14,6 @@ if (isset($_POST['logout'])) {
   header('Location: login.php');
 }
 
-// Retrieve the user type from the session
 $user = $_SESSION["user_type"];
 
 
