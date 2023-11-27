@@ -4,7 +4,7 @@ session_start();
 include('connection.php');
 
 // Check if the delete button is clicked
-if(isset($_POST['delete_user'])) {
+if (isset($_POST['delete_user'])) {
     $user_id_to_delete = $_POST['user_id_to_delete'];
 
     // Check if there are related records in the 'annonce' table
@@ -13,23 +13,9 @@ if(isset($_POST['delete_user'])) {
     $check_row = mysqli_fetch_assoc($check_result);
     $related_records_count = $check_row['count'];
 
-    // If there are related records, prompt the user to delete them first
-    if ($related_records_count > 0) {
-        echo "<script>alert('Cannot delete user. There are related records in the annonce table.'); window.location.href='users.php';</script>";
-    } else {
-        // No related records, proceed with user deletion
-        $delete_query = "DELETE FROM user WHERE user_id = $user_id_to_delete";
-        $delete_result = mysqli_query($conn, $delete_query);
-
-        // Add error handling and feedback as needed
-        if($delete_result) {
-            echo "<script>alert('User deleted successfully'); window.location.href='users.php';</script>";
-        } else {
-            echo "Error deleting user: " . mysqli_error($conn);
-        }
-    }
+    $delete_query = "DELETE FROM user WHERE user_id = $user_id_to_delete";
+    $delete_result = mysqli_query($conn, $delete_query);
 }
-
 ?>
 
 
