@@ -5,10 +5,11 @@ session_start();
 include 'connection.php';
 
 
-// Retrieve the user ID and user_type from the session
+// fetching user ID and user_type from session
 $user_id = $_SESSION["user_id"];
 $user = $_SESSION["user_type"];
 
+//inserting data
 if (isset($_POST['submit'])) {
   $product_title = $_POST['product_title'];
   $product_description = $_POST['product_description'];
@@ -19,16 +20,10 @@ if (isset($_POST['submit'])) {
   move_uploaded_file($product_picture_tmp, "./img/$product_picture_name");
 
 
-  $stmt = $conn->prepare("INSERT INTO `annonce` (image, titre, description, prix, user_id) VALUES (?, ?, ?, ?, ?)");
-  $stmt->bind_param('ssssi', $product_picture_name, $product_title, $product_description, $product_price, $user_id);
+  $query = "INSERT INTO `annonce` (image, titre, description, prix, user_id) VALUES ('$product_picture_name', '$product_title', '$product_description', $product_price, $user_id)";
+  $run_query = mysqli_query($conn, $query);
 
-  if ($stmt->execute()) {
-    echo "<script>alert('Data inserted successfully');</script>";
-  } else {
-    echo "<script>alert('Failed to execute statement: " . $stmt->error . "');</script>";
-  }
-  header("Location: " . $_SERVER['PHP_SELF']);
-  exit();
+  header("Location: add.php");
 }
 
 ?>
@@ -41,7 +36,7 @@ if (isset($_POST['submit'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>Dashboard</title>
+  <title>Add</title>
 </head>
 
 <body>
