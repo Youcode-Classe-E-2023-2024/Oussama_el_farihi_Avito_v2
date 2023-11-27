@@ -8,20 +8,14 @@ if (isset($_POST['submit'])) {
     $user_type = $_POST["user_type"];
     $user_picture_name = $_FILES['img']['name'];
     $user_picture_tmp = $_FILES['img']['tmp_name'];
-    $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Hash the password
+    $password = password_hash($_POST["password"], PASSWORD_BCRYPT); //hashing the password
 
     move_uploaded_file($user_picture_tmp, "./img/$user_picture_name");
 
-    $stmt = $conn->prepare("INSERT INTO `user` (name, email, user_type, password, img) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $name, $email, $user_type, $password, $user_picture_name);
+    $stmt = "INSERT INTO `user` (name, email, user_type, password, img) VALUES ('$name', '$email', '$user_type', '$password', '$user_picture_name')";
+    $result = mysqli_query($conn, $stmt);
 
-    if ($stmt->execute()) {
-        echo "<script>alert('Sign up done successfully');</script>";
-    } else {
-        $error_message = "Failed to execute statement: " . $stmt->error;
-        error_log($error_message);
-        echo "<script>alert('Error: $error_message');</script>";
-    }
+    header('Location: login.php');
 }
 
 ?>
