@@ -17,11 +17,11 @@
       <h2 class="text-4xl font-bold tracking-tight text-gray-900 text-center">Our Products</h2>
       <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <?php
-        // Fetch the rows from the 'product' table
+
         $sql = "SELECT * FROM annonce";
         $result = mysqli_query($conn, $sql);
 
-        // Loop through the result and display each product
+        
         while ($row = mysqli_fetch_assoc($result)) {
           $product_id = $row['id'];
           $product_title = $row['titre'];
