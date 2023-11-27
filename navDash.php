@@ -9,6 +9,13 @@ if (!isset($_SESSION["user_id"])) {
     exit();
 }
 
+if(isset($_POST['logout'])){
+  session_unset();
+  session_destroy();
+
+  header ('Location: login.php');
+}
+
 // Retrieve the user type from the session
 $user = $_SESSION["user_type"];
 
@@ -36,7 +43,13 @@ $user = $_SESSION["user_type"];
                   aria-current='page'>Users</a>
               </div>
             </div>
+            
           </div>
+          <div class='flex items-center'>
+                    <form method='post' action=''>
+                        <button for='logout' type='logout' name='logout' class='bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'>Logout</button>
+                    </form>
+                </div>
         </div>
       </div>
     </div>";
@@ -62,6 +75,12 @@ $user = $_SESSION["user_type"];
               </div>
             </div>
           </div>
+          <div class="flex items-center">
+                    <!-- Add the Logout button here with the same design as other buttons -->
+                    <form method="post" action="logout.php">
+                        <button type="submit" name="logout" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">Logout</button>
+                    </form>
+                </div>
         </div>
       </div>
     </div>';
@@ -81,6 +100,12 @@ $user = $_SESSION["user_type"];
               </div>
             </div>
           </div>
+          <div class="flex items-center">
+                    <!-- Add the Logout button here with the same design as other buttons -->
+                    <form method="post" action="logout.php">
+                        <button type="submit" name="logout" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">Logout</button>
+                    </form>
+                </div>
         </div>
       </div>
     </div>';
