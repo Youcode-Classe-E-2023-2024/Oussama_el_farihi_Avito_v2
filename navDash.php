@@ -4,24 +4,22 @@ include 'connection.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION["user_id"])) {
-    // Redirect to the login page or handle the case where the user is not logged in
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 
-if(isset($_POST['logout'])){
+if (isset($_POST['logout'])) {
   session_unset();
   session_destroy();
-
-  header ('Location: login.php');
+  header('Location: login.php');
 }
 
 // Retrieve the user type from the session
 $user = $_SESSION["user_type"];
 
 
- if ($user == 'admin'){
-    echo "<div class='min-h-full'>
+if ($user == 'admin') {
+  echo "<div class='min-h-full'>
     <nav class='bg-gray-800'>
       <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div class='flex h-16 items-center justify-between'>
@@ -53,8 +51,8 @@ $user = $_SESSION["user_type"];
         </div>
       </div>
     </div>";
- }elseif($user == 'annonceur'){
-    echo '<div class="min-h-full">
+} elseif ($user == 'annonceur') {
+  echo '<div class="min-h-full">
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -77,15 +75,15 @@ $user = $_SESSION["user_type"];
           </div>
           <div class="flex items-center">
                     <!-- Add the Logout button here with the same design as other buttons -->
-                    <form method="post" action="logout.php">
-                        <button type="submit" name="logout" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">Logout</button>
+                    <form method="post" action="">
+                        <button type="logout" name="logout" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">Logout</button>
                     </form>
                 </div>
         </div>
       </div>
     </div>';
- }else{
-    echo '<div class="min-h-full">
+} else {
+  echo '<div class="min-h-full">
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -102,12 +100,12 @@ $user = $_SESSION["user_type"];
           </div>
           <div class="flex items-center">
                     <!-- Add the Logout button here with the same design as other buttons -->
-                    <form method="post" action="logout.php">
-                        <button type="submit" name="logout" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">Logout</button>
+                    <form method="post" action="">
+                        <button type="logout" name="logout" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">Logout</button>
                     </form>
                 </div>
         </div>
       </div>
     </div>';
- }
+}
 ?>
