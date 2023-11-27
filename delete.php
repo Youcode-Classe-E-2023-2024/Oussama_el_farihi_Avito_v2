@@ -3,51 +3,36 @@ session_start();
 
 include 'connection.php';
 
-// Retrieve the user ID and user_type from the session
+// fetching user ID and user_type from session
 $user_id = $_SESSION["user_id"];
 $user_type = $_SESSION["user_type"];
 
-// Fetch only products associated with the logged-in user if the user is an "annonceur"
+// fetch only products associated with the user who logged if the user is an "annonceur"
 if ($user_type == 'annonceur') {
-    $select_all_query = "SELECT id, titre, image FROM annonce WHERE user_id = $user_id";
+    $query = "SELECT id, titre, image FROM annonce WHERE user_id = $user_id";
 } else {
-    // Fetch all products for an "admin"
-    $select_all_query = "SELECT id, titre, image FROM annonce";
+    // fetch all products for an "admin"
+    $query = "SELECT id, titre, image FROM annonce";
 }
 
-$result = $conn->query($select_all_query);
-$products = $result->fetch_all(MYSQLI_ASSOC);
+$run_query = mysqli_query($conn, $query);
+$products = mysqli_fetch_all($run_query, MYSQLI_ASSOC); //fetche all the results from the executed query $run_query
 
-// Process product deletion
+// delete process
 if (isset($_POST['delete'])) {
     if (isset($_POST['selected_products'])) {
         foreach ($_POST['selected_products'] as $product_id) {
-
-            // Check user type before deleting
+            // check user type before deleting
             if ($user_type == 'annonceur') {
-                // Annonceur can only delete their own products
-                $delete_query = "DELETE FROM annonce WHERE id = ? AND user_id = $user_id";
-                $stmt = $conn->prepare($delete_query);
-                $stmt->bind_param('i', $product_id);
+                $delete_query = "DELETE FROM annonce WHERE id = $product_id AND user_id = $user_id";
             } else {
-                // Admin can delete any product
-                $delete_query = "DELETE FROM annonce WHERE id = ?";
-                $stmt = $conn->prepare($delete_query);
-                $stmt->bind_param('i', $product_id);
+                $delete_query = "DELETE FROM annonce WHERE id = $product_id";
             }
-
-            if ($stmt->execute()) {
-                echo "<script>alert('Selected products deleted successfully'); window.location.href='delete.php';</script>";
-                exit();
-            } else {
-                echo "<script>alert('Failed to delete products: " . $stmt->error . "');</script>";
-            }
+            
+            mysqli_query($conn, $delete_query);
         }
-    } else {
-        echo "<script>alert('No products selected for deletion');</script>";
     }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
+    header("Location: delete.php");
 }
 ?>
 
