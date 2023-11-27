@@ -7,44 +7,33 @@ include 'connection.php';
 $user_id = $_SESSION["user_id"];
 $user_type = $_SESSION["user_type"];
 
-// Fetch only products associated with the logged-in user if the user is an "annonceur"
+// fetch only products associated with the user who logged if the user is an "annonceur"
 if ($user_type == 'annonceur') {
     $select_all_query = "SELECT id, titre, image, description, prix FROM annonce WHERE user_id = $user_id";
 } else {
-    // Fetch all products for an "admin"
     $select_all_query = "SELECT id, titre, image, description, prix FROM annonce";
 }
 
-$result = $conn->query($select_all_query);
-$products = $result->fetch_all(MYSQLI_ASSOC);
+$result = mysqli_query($conn, $select_all_query);
+$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-// Handle form submission for updating products
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
+//updating form
+if (isset($_POST['update'])) {
     $product_id = $_POST['product_id'];
     $product_title = $_POST['product_title'];
     $product_description = $_POST['product_description'];
     $product_price = $_POST['product_price'];
 
-    // Check user type before editing
+    //check user type before editing
     if ($user_type == 'annonceur') {
-        // Annonceur can only update their own products
-        $update_sql = "UPDATE annonce SET titre=?, description=?, prix=? WHERE id=? AND user_id=?";
-        $stmt = $conn->prepare($update_sql);
-        $stmt->bind_param('sssii', $product_title, $product_description, $product_price, $product_id, $user_id);
+        $update_sql = "UPDATE annonce SET titre='$product_title', description='$product_description', prix=$product_price WHERE id=$product_id AND user_id=$user_id";
+        $stmt = mysqli_query($conn, $update_sql);
     } else {
-        // Admin can update any products details
-        $update_sql = "UPDATE annonce SET titre=?, description=?, prix=? WHERE id=?";
-        $stmt = $conn->prepare($update_sql);
-        $stmt->bind_param('sssi', $product_title, $product_description, $product_price, $product_id);
+        $update_sql = "UPDATE annonce SET titre='$product_title', description='$product_description', prix=$product_price WHERE id=$product_id";
+        $stmt = mysqli_query($conn, $update_sql);
     }
 
-    if ($stmt->execute()) {
-        echo "<script>alert('Product updated successfully');</script>";
-    } else {
-        echo "<script>alert('Failed to update product: " . $stmt->error . "');</script>";
-    }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
+    header("Location: edit.php");
 }
 
 ?>
