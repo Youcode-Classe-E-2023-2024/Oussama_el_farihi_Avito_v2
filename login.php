@@ -8,23 +8,20 @@ if (isset($_POST['submit'])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
 
-  // Use prepared statement to prevent SQL injection
-  $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
-  $stmt->bind_param('s', $email);
-  $stmt->execute();
-  $result = $stmt->get_result();
+
+  $query = "SELECT * FROM user WHERE email = '$email'";
+  $result = mysqli_query($conn, $query);
 
   if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
+    $user = mysqli_fetch_assoc($result);
 
-    // Check the password using password_verify
+    //check the password using password_verify
     if (password_verify($password, $user['password'])) {
-      // Login successful
+      
       $_SESSION["name"] = $user['name'];
       $_SESSION["user_id"] = $user['user_id'];
       $_SESSION["user_type"] = $user['user_type'];
 
-      // Redirect based on user type
       switch ($user['user_type']) {
         case 'admin':
           header("Location: profile.php");
@@ -35,18 +32,10 @@ if (isset($_POST['submit'])) {
         case 'annonceur':
           header("Location: profile.php");
           break;
+        }
       }
-
-      exit(); // Ensure no further code is executed
-    } else {
-      // Login failed - Incorrect password
-      $error = "Invalid password";
     }
-  } else {
-    // Login failed - User not found
-    $error = "User not found";
   }
-}
 ?>
 
 
