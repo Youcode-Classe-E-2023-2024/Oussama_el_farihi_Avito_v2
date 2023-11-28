@@ -16,7 +16,6 @@ if (isset($_POST['logout'])) {
 
 $user = $_SESSION["user_type"];
 
-
 if ($user == 'admin') {
   echo "<div class='min-h-full'>
     <nav class='bg-gray-800'>
@@ -50,7 +49,7 @@ if ($user == 'admin') {
         </div>
       </div>
     </div>";
-} elseif ($user == 'annonceur') {
+} else if ($user == 'annonceur') {
   echo '<div class="min-h-full">
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
