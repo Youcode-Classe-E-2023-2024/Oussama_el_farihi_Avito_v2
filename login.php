@@ -4,6 +4,11 @@ session_start();
 
 include('connection.php');
 
+if (isset($_SESSION["user_id"])) {
+  header("Location: profile.php");
+  exit();
+}
+
 if (isset($_POST['submit'])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
