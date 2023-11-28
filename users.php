@@ -46,6 +46,7 @@ if (isset($_POST['submit'])) {
               <div class='min-w-0 flex-auto'>
                 <p class='text-sm font-semibold leading-6 text-gray-900'>$username</p>
                 <p class='mt-1 truncate text-xs leading-5 text-gray-500'>$email</p>
+                <p class='mt-1 truncate text-xs leading-5 text-gray-500'>$role</p>
               </div>
             </div>";
 
