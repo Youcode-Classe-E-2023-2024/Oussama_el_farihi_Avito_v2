@@ -63,7 +63,6 @@ if (isset($_POST['update'])) {
             <p class="mt-1 text-sm leading-6 text-gray-600 mb-6">This information will be displayed publicly so be
                 careful
                 what you edit.</p>
-            <!-- Display products for editing -->
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <?php
                 foreach ($products as $row) {
