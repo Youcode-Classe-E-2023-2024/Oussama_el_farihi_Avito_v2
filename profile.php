@@ -3,15 +3,25 @@ session_start();
 
 include('connection.php');
 
+$user_id = $_SESSION["user_id"];
+
 // Check if the user is logged in
 if (!isset($_SESSION["user_id"])) {
-    // Redirect to the login page or handle the case where the user is not logged in
     header("Location: login.php");
     exit();
 }
 
-// Retrieve the user ID from the session
+//updating data
+if (isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+
+    $query = "UPDATE user SET name='$name', email='$email' WHERE user_id=$user_id";
+    $result = mysqli_query($conn, $query);
+}
+
 $user_id = $_SESSION["user_id"];
+
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +31,7 @@ $user_id = $_SESSION["user_id"];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Dashboard</title>
+    <title>User profile</title>
 </head>
 
 <body>
@@ -36,45 +46,42 @@ $user_id = $_SESSION["user_id"];
     <main>
         <?php
 
-        // Fetch the information of the logged-in user from the 'user' table
         $sql = "SELECT * FROM user WHERE user_id = $user_id";
         $result = mysqli_query($conn, $sql);
 
-        // Loop through the result and display each user
+
         while ($row = mysqli_fetch_assoc($result)) {
             $user_id = $row['user_id'];
-            $username = $row['name'];
+            $name = $row['name'];
             $email = $row['email'];
-            $role = $row['user_type'];
+            $user_type = $row['user_type'];
             $user_picture = $row['img'];
 
 
             echo "
             <div class='mx-auto max-w-xl py-16 sm:px-12 lg:px-16'>
-            <div class='bg-white overflow-hidden shadow rounded-lg p-6'>
-                <!-- Profile Card -->
-                <div class='bg-white overflow-hidden shadow rounded-lg'>
-                    <div class='p-4'>
-                        <!-- User Image -->
-                        <div class='flex items-center justify-center'>
-                            <img src='img/$user_picture' alt='User Image' class='w-16 h-16 rounded-full'>
-                        </div>
-                        <!-- User Name -->
-                        <div class='mt-4 text-center'>
-                            <h3 class='text-lg font-medium leading-6 text-gray-900'>$username</h3>
-                        </div>
-                        <!-- User Email -->
-                        <div class='mt-2 text-center'>
-                            <p class='text-sm leading-5 text-gray-600'>$email</p>
-                        </div>
-                        <!-- User Role -->
-                        <div class='mt-2 text-center'>
-                            <p class='text-sm leading-5 font-medium text-indigo-600'>$role</p>
-                        </div>
+                <div class='bg-white overflow-hidden shadow rounded-lg p-6'>
+                    <div class='bg-white overflow-hidden shadow rounded-lg'>
+                        <form method='POST'>
+                            <div class='p-4'>
+                                <div class='flex items-center justify-center'>
+                                    <img src='img/$user_picture' alt='User Image' class='w-16 h-16 rounded-full'>
+                                </div>
+                                <div class='mt-4 text-center'>
+                                    <input class='text-lg font-medium leading-6 text-gray-900' type='text' name='name' value='$name'>
+                                </div>
+                                <div class='mt-4 text-center'>
+                                    <input class='text-lg font-medium text-gray-900' type='text' name='email' value='$email'>
+                                </div>
+                                <div class='mt-4 text-center'>
+                                    <p class='text-sm leading-5 font-medium text-indigo-600'>$user_type</p>
+                                </div>
+                                <button type='submit' name='submit' class='bg-indigo-600 text-white px-4 py-2 rounded-md'>Update</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-        </div>";
+            </div>";
         }
         ?>
     </main>
