@@ -20,7 +20,10 @@
       <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <?php
 
-        $sql = "SELECT * FROM annonce";
+        $sql = "SELECT annonce.*, user.name, user.user_id
+        FROM annonce
+        JOIN user ON annonce.user_id = user.user_id;
+        ";
         $result = mysqli_query($conn, $sql);
 
 
@@ -30,6 +33,7 @@
           $product_description = $row['description'];
           $product_price = $row['prix'];
           $product_picture = $row['image'];
+          $name = $row['name'];
 
           echo "<div class='group relative' method='POST'>
           <div
@@ -48,6 +52,7 @@
               <p class='mt-1 text-sm text-gray-500'>$product_description</p>
             </div>
             <p class='text-sm font-medium text-gray-900'>$$product_price</p>
+            <p class='text-sm font-medium text-gray-900'><br>$name</p>
           </div>
           <button class='bg-blue-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800'>
     Buy Now
