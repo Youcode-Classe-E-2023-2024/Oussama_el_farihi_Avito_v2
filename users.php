@@ -3,6 +3,11 @@ session_start();
 
 include('connection.php');
 
+if($_SESSION["user_type"] != "admine"){
+    header("Location: profile.php");
+    exit();
+}
+
 if (isset($_POST['submit'])) {
     $id_delete = $_POST['id_delete'];
 
